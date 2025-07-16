@@ -1,0 +1,25 @@
+<!-- templates/edit_attachment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Attachment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Attachment</h1>
+        <form action="{{ url_for('edit_attachment', attachment_id=attachment[0]) }}" method="POST">
+            <label for="company_name">Company Name:</label>
+            <input type="text" id="company_name" name="company_name" value="{{ attachment[2] }}" required>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" value="{{ attachment[3] }}" required>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" value="{{ attachment[4] }}" required>
+            <button type="submit" class="btn">Update Attachment</button>
+        </form>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>
