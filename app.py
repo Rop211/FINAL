@@ -178,4 +178,8 @@ def delete_attachment(attachment_id):
 
 if __name__ == '__main__':
     init_db()
+<<<<<<< HEAD
     app.run(debug=True, port=5002)
+=======
+    app.run(host="127.0.0.1", port=5004, debug=True)
+>>>>>>> 92925ad17c5e998d6b1e409522f48305c519ed82
