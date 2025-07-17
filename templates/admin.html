@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+
+        <!-- Add Attachment Button -->
+        <a href="{{ url_for('add_attachment') }}" class="btn">Add New Attachment</a>
+
+        <!-- Users Table -->
+        <h2>All Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>{{ user[4] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Attachments Table -->
+        <h2>All Attachments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student</th>
+                    <th>Company Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attachment in attachments %}
+                <tr>
+                    <td>{{ attachment[0] }}</td>
+                    <td>
+                        {% for user in users %}
+                            {% if user[0] == attachment[1] %}
+                                {{ user[2] }} ({{ user[1] }})
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ attachment[2] }}</td>
+                    <td>{{ attachment[3] }}</td>
+                    <td>{{ attachment[4] }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_attachment', attachment_id=attachment[0]) }}" class="btn">Edit</a>
+                        <form action="{{ url_for('delete_attachment', attachment_id=attachment[0]) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Evaluations Table -->
+        <h2>All Evaluations</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student</th>
+                    <th>Supervisor</th>
+                    <th>Rating</th>
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evaluation in evaluations %}
+                <tr>
+                    <td>{{ evaluation[0] }}</td>
+                    <td>
+                        {% for user in users %}
+                            {% if user[0] == evaluation[1] %}
+                                {{ user[2] }} ({{ user[1] }})
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for user in users %}
+                            {% if user[0] == evaluation[2] %}
+                                {{ user[2] }} ({{ user[1] }})
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ evaluation[3] }}</td>
+                    <td>{{ evaluation[4] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('index') }}" class="btn">Back to Home</a>
+        <!-- Logout Button -->
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+    </div>
+</body>
+</html>
